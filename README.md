@@ -12,7 +12,7 @@
 - [ドキュメントプログラミング（問題集）](./4_pdoc_lecture2.md)
 - [Google Apps Script（講義）](./5_gas_lecture.md) 
 - [Google Apps Script（問題集）](./5_gas_quiz.md)
-- [課題](./6_homework.md)
+- [宿題](./6_homework.md)
 - [README](./README.md)
 
 
