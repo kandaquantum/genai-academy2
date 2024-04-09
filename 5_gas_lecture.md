@@ -53,7 +53,9 @@ GASを使用すると、Gmailと連携してメールの一斉送信を自動化
 #### 例題と解説
 以下は、Google Sheetsに記載された受信者リストを元に、メールを一斉送信するサンプルコードです。
 
-```python
+* 「htmlで雰囲気良い感じにして」というプロンプトで綺麗なメールにできます。
+
+<pre><code class="language-python">
 function sendBulkEmail() {
   var sheet = SpreadsheetApp.getActiveSheet();
   var dataRange = sheet.getDataRange();
@@ -62,12 +64,17 @@ function sendBulkEmail() {
   for (var i = 1; i < data.length; i++) {
     var recipient = data[i][0];
     var subject = "サンプルメール";
-    var body = "こんにちは、" + data[i][1] + "さん\n\nこれはサンプルメールです。";
+    var body = `
+      <p>こんにちは、${data[i][1]}さん</p>
+      <p>これはサンプルメールです。</p>
+      <p>以下のリンクから詳細をご確認ください。</p>
+      <a href="https://example.com">詳細リンク</a>
+    `;
 
-    GmailApp.sendEmail(recipient, subject, body);
+    GmailApp.sendEmail(recipient, subject, body, {htmlBody: body});
   }
 }
-```
+</code></pre>
 
 このコードでは、Google Sheetsのアクティブシートからデータを取得し、1行目をヘッダーとして扱います。2行目以降のデータを順番に処理し、1列目の値を受信者のメールアドレス、2列目の値を受信者の名前として使用しています。メールの件名と本文は固定の内容ですが、本文には受信者の名前を差し込んでいます。
 
