@@ -11,6 +11,7 @@
   - [自然言語プログラミングの概要](#overview-of-nlp)
   - [自然言語プログラミングの利点](#advantages-of-nlp)
   - [コード例と解説](#nlp-code-example)
+  - [自然言語プログラミングのワークフロー](#natural-language-programming-workflow)
 - [まとめ](#conclusion)
 
 <a id="introduction"></a>
@@ -188,6 +189,149 @@ print(f"平均点は{average_score}点です。")
 
 
 この例では、自然言語のみを使用して、商品一覧を表示するプログラムの仕様を記述しています。この仕様をもとに、内部的にJavaScriptなどのプログラミング言語に変換され、実行されます。
+
+
+
+<a id="natural-language-programming-workflow"></a>
+### 自然言語プログラミングのワークフロー
+自然言語プログラミングを効果的に行うためのワークフローは以下のようになります。
+
+1. 自然言語でプログラムの仕様を記述する
+   - 目的とする処理や機能を自然言語で詳細に記述します。
+   - 例えば、「ユーザーがフォームに入力した情報をデータベースに保存し、確認メールを送信する」といった具合です。
+
+2. 自然言語の仕様を元に、プログラムを生成する
+   - 自然言語処理技術を用いて、自然言語の仕様からプログラムコードを自動生成します。
+   - 必要に応じて、生成されたコードを修正・調整します。
+
+3. ドキュメントプログラミングの手法を適用する
+   - 生成されたプログラムコードに、自然言語の説明（コメント）を追加します。
+   - コードの各部分の意図や機能を明確にし、可読性を高めます。
+
+4. コメントを抽出してドキュメントを作成する
+   - プログラムコードからコメントのみを抽出します。
+   - 抽出したコメントを整理し、独立したドキュメントを作成します。
+
+5. ドキュメントを修正する
+   - 作成したドキュメントを元に、プログラムコードの一部を修正します。
+   - 修正時に生成されたコメントを、ドキュメントに追加します。
+   - これにより、コードとドキュメントの整合性が保たれ、プログラムの理解が深まります。
+
+この一連のワークフローにより、自然言語の仕様からプログラムコードを生成し、さらにドキュメントプログラミングの手法を適用することで、可読性の高いドキュメントとプログラムを同時に作成することができます。自然言語プログラミングとドキュメントプログラミングを組み合わせることで、プログラミングの効率化と品質向上を図ることができるのです。
+
+
+具体例
+
+```python
+def generate_syllabus_graph(syllabus):
+    """
+    syllabusの内容からグラフを生成する関数
+    
+    Args:
+        syllabus (dict): syllabusの内容が入った辞書
+        
+    Returns:
+        None
+    """
+    client = anthropic.Anthropic(api_key=anthropic.api_key)
+    
+    prompt = f"""
+    syllabus:
+    {syllabus}
+
+    上記のシラバスから、
+    以下のPythonコードを生成してください。
+
+    # syllabusデータの作成 （型：リスト[dict]）
+    # Graphvizを使ってグラフを作成。コメントに'Syllabus Graph'を指定。
+    # 週のボックスノードと講義サブボックスの作成
+    # syllabusデータの各週について繰り返し処理
+    # 週のインデックスを取得
+    # 週のトピックを取得し、カンマ区切りの文字列に変換
+    # 週のノード名を作成（例: "Week 1\n基礎開発ツール講習"）
+    # 週のノードを作成。ボックス形状、塗りつぶし、水色の背景色を指定。
+    # 週ごとのサブグラフを作成
+    # 講義のタイトルをリストアップし、改行区切りの文字列に変換
+    # サブグラフ内に講義一覧のノードを作成。ボックス形状、ラベルに講義一覧を指定。
+    # 週のノードと講義一覧のノードを破線で接続
+    # 週ボックスノードの下部（south）からエッジを始め、headport='sw'はサブグラフの左下（south-west）にエッジを接続するように指定
+    # 隔週ごとの矢印の接続
+    # syllabusデータの週の数-1回繰り返し処理
+    # 現在の週のデータを取得
+    # 次の週のデータを取得
+    # 現在の週のノード名を作成
+    # 次の週のノード名を作成
+    # 現在の週のノードと次の週のノードを矢印で接続
+    # グラフの保存と表示
+    # グラフを'syllabus_graph'という名前で保存し、表示する
+
+    pythonのコードブロックのみ出力。その他説明は書かないこと。
+    """
+    
+    response = client.messages.create(
+        model="claude-3-opus-20240229",
+        max_tokens=2000,
+        temperature=0.7,
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": prompt
+                    }
+                ]
+            }
+        ]
+    )
+    
+    code = response.content[0].text.strip()
+    
+    code = code.replace("```python", "").replace("```", "")
+    with open("generate_syllabus_graph.py", "w") as f:
+        f.write(code)
+
+    # codeを実行するコードを追記
+    exec(code)
+    
+    
+# from generate_syllabus_graph import generate_syllabus_graph
+
+```
+
+以下実装結果
+
+```python
+
+
+import graphviz
+
+syllabus = [{'index': 1, 'topics': ['基礎開発ツール講習'], 'lectures': [{'title': 'テキスト生成AIの概要', 'description': 'テキスト生成AIについて概要を説明する\n'}, {'title': 'GPTを使ったオリジナルチャットボットの作成', 'description': 'GPTを使ってオリジナルのチャットボットを作る方法を教える\n'}, {'title': 'Cursorの基本的な使い方と活用法', 'description': 'Cursorの基本的な使い方と、どんなことに活用できるのかをレクチャーする\n'}]}, {'index': 2, 'topics': ['応用開発ツール講習'], 'lectures': [{'title': 'テキスト生成AIの概要（応用編）', 'description': 'テキスト生成AIの概要を説明する（応用編）\n'}, {'title': 'GPTを使った独自のチャットボット作成（応用編）', 'description': 'GPTを使った独自のチャットボット作成について深掘りする\n'}, {'title': 'Cursorの実践的な操作方法と活用法', 'description': 'Cursorのより実践的な操作方法と活用法について学ぶ\n'}]}, {'index': 3, 'topics': ['AIを使った自動化ツールの作成'], 'lectures': [{'title': 'RPA(Robotic Process Automation)の概要', 'description': 'RPA(Robotic Process Automation)の概要を説明する\n'}, {'title': 'PythonとNode.jsを使った自動化スクリプトの書き方', 'description': 'PythonやNode.jsを使った自動化スクリプトの書き方を解説する\n'}, {'title': '自動化ツールの実践的な運用方法', 'description': '作成したツールの実践的な運用方法について触れる\n'}]}]
+
+graph = graphviz.Digraph(comment='Syllabus Graph')
+
+for week in syllabus:
+    week_index = week['index']
+    week_topics = ', '.join(week['topics'])
+    week_node_name = f"Week {week_index}\n{week_topics}"
+    graph.node(week_node_name, shape='box', style='filled', fillcolor='lightblue')
+    
+    with graph.subgraph(name=f'cluster_week_{week_index}') as subgraph:
+        lecture_titles = '\n'.join([lecture['title'] for lecture in week['lectures']])
+        subgraph.node(f'lectures_{week_index}', shape='box', label=lecture_titles)
+        graph.edge(week_node_name, f'lectures_{week_index}', style='dashed', tailport='s', headport='sw')
+
+for i in range(len(syllabus) - 1):
+    current_week = syllabus[i]
+    next_week = syllabus[i + 1]
+    current_week_node_name = f"Week {current_week['index']}\n{', '.join(current_week['topics'])}"
+    next_week_node_name = f"Week {next_week['index']}\n{', '.join(next_week['topics'])}"
+    graph.edge(current_week_node_name, next_week_node_name)
+
+graph.view(filename='syllabus_graph', cleanup=True)
+
+
+```
 
 <a id="conclusion"></a>
 ## まとめ
