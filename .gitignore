@@ -1,3 +1,35 @@
 trash/
 
 .env
+env/
+# 一時ファイルやログファイルを無視
+*.log
+*.tmp
+*.swp
+*.bak
+
+# ビルド生成物を無視
+build/
+dist/
+*.class
+*.jar
+*.war
+
+# 依存関係を無視
+node_modules/
+vendor/
+
+# 環境固有の設定ファイルを無視
+.env
+.env.local
+.env.*.local
+
+# IDEの設定ファイルを無視
+.vscode/
+.idea/
+*.iml
+*.sublime-workspace
+
+# OSが生成するファイルを無視
+.DS_Store
+Thumbs.db
