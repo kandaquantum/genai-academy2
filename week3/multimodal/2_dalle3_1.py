@@ -18,3 +18,19 @@ response = client.images.generate(
 image_url = response.data[0].url
 print(image_url)
 
+# 画像URLをダウンロードしてPNGファイルとして保存する
+import requests
+
+# 画像URLからファイル名を取得
+filename = image_url.split("/")[-1]
+
+# 画像をダウンロード
+response = requests.get(image_url)
+
+# PNGファイルとして保存
+with open(filename, "wb") as f:
+    f.write(response.content)
+
+print(f"画像を {filename} として保存しました")
+
+

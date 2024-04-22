@@ -25,13 +25,21 @@ def generate_speech(text, voice="shimmer", filename="speech.mp3"):
         voice=voice,
         input=text
     )
+
+    # 生成した音声ファイルを出力
     response.stream_to_file(speech_file_path)
     print(f"{filename}に音声ファイルを保存しました。")
-    
-    # 生成した音声ファイルを開く
-    os.system(f"open {speech_file_path}")
 
-def generate_multilingual_speech(texts):
+    # 生成した音声ファイルを実行する
+    import subprocess
+    subprocess.run(["afplay", str(speech_file_path)])
+    
+    # # 生成した音声ファイルを開く
+    # os.system(f"open {speech_file_path}")
+
+
+
+def generate_multilingual_speech(texts, voice="nova"):
     """
     複数の言語のテキストから音声を生成し、ファイルに保存する関数
     
@@ -43,9 +51,9 @@ def generate_multilingual_speech(texts):
     """
     for lang, text in texts.items():
         filename = f"{lang}.mp3"
-        generate_speech(text, voice="alloy", filename=filename)
+        generate_speech(text, voice=voice, filename=filename)
         
-        # 生成した音声ファイルを開く
+        # 生成した音声フ��イルを開く
         speech_file_path = Path(__file__).parent / filename
         os.system(f"open {speech_file_path}")
         
@@ -54,9 +62,12 @@ def generate_multilingual_speech(texts):
 
 if __name__ == "__main__":
     # 日本語のテキストから音声を生成
-    japanese_text = "こんにちは！今日はとてもいい天気で、元気いっぱいです。何か新しいことを始めるのに最適な日ですね！"
-    generate_speech(japanese_text)
+    # japanese_text = "こんにちは！今日はとてもいい天気で、元気いっぱいです。何か新しいことを始めるのに最適な日ですね！"
+
+    # generate_speech(japanese_text, voice="nova")
     
+    # cmd + /
+
     # 複数の言語のテキストから音声を生成
     multilingual_texts = {
         "en": "This is a test of the multilingual capabilities of the OpenAI TTS API.",
@@ -65,5 +76,5 @@ if __name__ == "__main__":
         "de": "Dies ist ein Test der mehrsprachigen Fähigkeiten der OpenAI TTS API.",
         "ja": "これはOpenAI TTS APIの多言語機能のテストです。"
     }
-    generate_multilingual_speech(multilingual_texts)
+    generate_multilingual_speech(multilingual_texts, voice="nova")
 

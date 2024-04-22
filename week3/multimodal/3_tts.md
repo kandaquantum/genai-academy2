@@ -13,15 +13,18 @@ OpenAI Audio APIは、テキストから自然な音声を生成するための�
 音声エンドポイントには、モデル、音声に変換するテキスト、音声生成に使用するボイスの3つの主要な入力があります。シンプルなリクエストは次のようになります。
 
 ```python
-from pathlib import Path  # Pathライブラリをインポートして、ファイルパスの操作を簡単にします📁
-from openai import OpenAI  # OpenAIライブラリからOpenAIクラスをインポートします
-client = OpenAI()  # OpenAIクライアントを初期化します🌟
+from pathlib import Path                 # Pathライブラリをインポートして、ファイルパスの操作を簡単にします📁
+from openai import OpenAI                # OpenAIライブラリからOpenAIクラスをインポートします
+client = OpenAI()                        # OpenAIクライアントを初期化します🌟
 
-speech_file_path = Path(__file__).parent / "speech.mp3"  # 現在のファイルのディレクトリに"speech.mp3"という名前で保存するパスを設定します🎵
+speech_file_path = Path(__file__).parent / "speech.mp3"  
+# 現在のファイルのディレクトリに"speech.mp3"という名前で保存するパスを設定します🎵
+
 response = client.audio.speech.create(
-  model="tts-1",  # モデルを"tts-1"に設定します🔊
-  voice="nova",  # ボイスを"nova"に設定します🗣️
-  input="こんにちは！今日はとてもいい天気で、元気いっぱいです。何か新しいことを始めるのに最適な日ですね！"  # 音声に変換したいテキストを入力します📝
+    model="tts-1",                       # モデルを"tts-1"に設定します🔊
+    voice="nova",                        # ボイスを"nova"に設定します🗣️
+    input="こんにちは！今日はとてもいい天気で、元気いっぱいです。何か新しいことを始めるのに最適な日ですね！"  
+    # 音声に変換したいテキストを入力します📝
 )
 
 response.stream_to_file(speech_file_path)  # 応答をファイルにストリーミングして保存します💾

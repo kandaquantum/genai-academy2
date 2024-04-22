@@ -20,14 +20,14 @@ DALL·E 3 を使用して画像を生成するには、以下のパラメータ�
 
 ```python
 from openai import OpenAI  # OpenAIライブラリをインポート
-client = OpenAI()  # OpenAIクライアントを初期化
+client = OpenAI()         # OpenAIクライアントを初期化
 
 response = client.images.generate(  # 画像生成APIを呼び出し
-  model="dall-e-3",  # 使用するモデルを指定（DALL·E 3）
-  prompt="a white siamese cat",  # 生成する画像の内容を説明するプロンプト
-  size="1024x1024",  # 生成する画像のサイズを指定
-  quality="standard",  # 画像の品質を指定（標準）
-  n=1,  # 生成する画像の枚数を指定（1枚）
+    model="dall-e-3",               # 使用するモデルを指定（DALL·E 3）
+    prompt="a white siamese cat",   # 生成する画像の内容を説明するプロンプト
+    size="1024x1024",               # 生成する画像のサイズを指定
+    quality="standard",             # 画像の品質を指定（標準）
+    n=1,                            # 生成する画像の枚数を指定（1枚）
 )
 
 image_url = response.data[0].url
@@ -40,14 +40,18 @@ from openai import OpenAI
 client = OpenAI()
 
 response = client.images.generate(
-  model="dall-e-3",  // 使用するモデルを指定（DALL·E 3）
-  prompt="I NEED to test how the tool works with extremely simple prompts. DO NOT add any detail, just use it AS-IS: A red apple on a white table",  // 生成する画像の内容を説明するプロンプト。極めてシンプルなプロンプトでツールがどのように動作するかをテストする必要がある。詳細は追加せず、そのままの状態で使用する。
-  size="1024x1024",  // 生成する画像のサイズを指定
-  quality="standard",  // 画像の品質を指定（標準）
-  n=1,  // 生成する画像の枚数を指定（1枚）
-)
+  model="dall-e-3",                       # 使用するモデルを指定（DALL·E 3）
+  prompt="I NEED to test how the tool works with extremely simple prompts. "
+         "DO NOT add any detail, just use it AS-IS: A red apple on a white table",  
+          # 生成する画像の内容を説明するプロンプト。
+          # 極めてシンプルなプロンプトでツールがどのように動作するかをテストする必要がある。
+          # 詳細は追加せず、そのままの状態で使用する。
+      size="1024x1024",                 # 生成する画像のサイズを指定
+      quality="standard",               # 画像の品質を指定（標準） 
+      n=1,                              # 生成する画像の枚数を指定（1枚）
+    )
 
-image_url = response.data[0].url
+    image_url = response.data[0].url
 ```
 
 
@@ -73,12 +77,27 @@ from openai import OpenAI
 client = OpenAI()
 
 response = client.images.edit((
-  model="dall-e-2",
-  image=open("sunlit_lounge.png", "rb"),
-  mask=open("mask.png", "rb"),
-  prompt="A sunlit indoor lounge area with a pool containing a flamingo",
-  n=1,
-  size="1024x1024"
+  model="dall-e-2",                                                      # 使用するモデルを指定（DALL·E 2）
+  image=open("sunlit_lounge.png", "rb"),                                 # 編集する画像を指定
+  mask=open("mask.png", "rb"),                                           # マスク画像を指定
+  prompt="A sunlit indoor lounge area with a pool containing a flamingo",# 生成する画像の内容を説明するプロンプト
+  n=1,                                                                   # 生成する画像の枚数を指定（1枚）
+  size="1024x1024"                                                       # 生成する画像のサイズを指定
+)
+image_url = response.data[0].url
+```
+
+```python
+from openai import OpenAI
+client = OpenAI()
+
+response = client.images.edit((
+  model="dall-e-2",  # 使用するモデルを指定（DALL·E 2）
+  image=open("sunlit_lounge.png", "rb"),  # 編集する画像を指定
+  mask=open("mask.png", "rb"),  # マスク画像を指定
+  prompt="A sunlit indoor lounge area with a pool containing a flamingo",  # 生成する画像の内容を説明するプロンプト
+  n=1,  # 生成する画像の枚数を指定（1枚）
+  size="1024x1024"  # 生成する画像のサイズを指定
 )
 image_url = response.data[0].url
 ```
@@ -92,17 +111,17 @@ image_url = response.data[0].url
 以下は、画像変換のPythonコードの例です。
 
 ```python
-from openai import OpenAI
-client = OpenAI()
+from openai import OpenAI                                                # OpenAIをインポート
+client = OpenAI()                                                        # OpenAIクライアントを作成
 
-response = client.images.create_variation(
-  model="dall-e-2",
-  image=open("corgi_and_cat_paw.png", "rb"),
-  n=1,
-  size="1024x1024"
+response = client.images.create_variation(                               # 画像変換のリクエストを送信
+  model="dall-e-2",                                                      # 使用するモデルを指定（DALL·E 2）
+  image=open("corgi_and_cat_paw.png", "rb"),                             # 変換元の画像を指定
+  n=1,                                                                   # 生成する画像の枚数を指定（1枚）
+  size="1024x1024"                                                       # 生成する画像のサイズを指定
 )
 
-image_url = response.data[0].url
+image_url = response.data[0].url                                         # 生成された画像のURLを取得
 ```
 
 編集エンドポイントと同様に、入力画像は4MB未満の正方形のPNG画像である必要があります。
