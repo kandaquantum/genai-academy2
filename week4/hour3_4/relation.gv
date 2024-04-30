@@ -1,0 +1,7 @@
+digraph Relation {
+	customer [label=Customer shape=box]
+	order [label=Order shape=box]
+	product [label=Product shape=box]
+	customer -> order [label="1:N"]
+	order -> product [label="M:N"]
+}
