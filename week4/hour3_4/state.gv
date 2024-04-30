@@ -1,0 +1,9 @@
+digraph State {
+	new [label=New shape=circle]
+	in_progress [label="In Progress" shape=circle]
+	completed [label=Completed shape=doublecircle]
+	cancelled [label=Cancelled shape=doublecircle]
+	new -> in_progress [label=start]
+	in_progress -> completed [label=finish]
+	in_progress -> cancelled [label=cancel]
+}

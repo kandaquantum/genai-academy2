@@ -1,0 +1,7 @@
+digraph ER {
+	customer [label=Customer shape=box]
+	order [label=Order shape=box]
+	product [label=Product shape=box]
+	customer -> order [label=places]
+	order -> product [label=contains]
+}

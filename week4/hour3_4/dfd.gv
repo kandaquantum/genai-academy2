@@ -1,0 +1,8 @@
+digraph DFD {
+	customer [label=Customer shape=circle]
+	order_process [label="Order Process" shape=rectangle]
+	order_db [label="Order Database" shape=cylinder]
+	customer -> order_process [label="Order Request"]
+	order_process -> order_db [label="Store Order"]
+	order_db -> order_process [label="Order Data"]
+}
