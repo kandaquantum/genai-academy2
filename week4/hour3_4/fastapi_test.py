@@ -1,7 +1,12 @@
-from fastapi import FastAPI                                                  # FastAPIをインポート
+from fastapi import FastAPI
 
-app = FastAPI()                                                               # FastAPIアプリケーションを作成
+app = FastAPI()
 
-@app.get("/")                                                                 # ルートパス("/")へのGETリクエストを処理するエンドポイントを定義
-def read_root():                                                              # - read_root関数を定義
-    return {"Hello": "World"}                                                 # -- {"Hello": "World"}というJSONレスポンスを返す
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
+# 以下を追加
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
